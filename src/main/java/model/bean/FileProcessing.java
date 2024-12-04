@@ -1,6 +1,6 @@
 package model.bean;
 
-public class Work {
+public class FileProcessing {
 	private Integer id;
 	
 	private String inputFile;
@@ -9,7 +9,7 @@ public class Work {
 	
 	private User user;
 	
-	private Status status;
+	private String status;
 
 	public Integer getId() {
 		return id;
@@ -43,11 +43,11 @@ public class Work {
 		this.user = user;
 	}
 
-	public Status getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
