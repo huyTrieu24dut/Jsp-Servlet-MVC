@@ -217,12 +217,36 @@
                 const fileName = document.createElement('div');
                 fileName.className = 'file-name';
                 fileName.textContent = file.name;
+                
+                console.log(fileName.textContent);
 
                 const downloadButton = document.createElement('button');
                 downloadButton.textContent = 'Download';
+                
                 downloadButton.addEventListener('click', () => {
-                    alert(`Downloading ${file.name}`);
-                    // Add actual download logic here
+                    alert(`Uploading and processing ${file.name}`);
+                    
+                    const formData = new FormData();
+                    formData.append('file', file); // Thêm file vào FormData
+
+                    fetch('<%= request.getContextPath() %>/UploadAndConvertFileServlet', { // URL mapping của servlet
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to process file on server');
+                        }
+                        return response.text(); // Server có thể trả về phản hồi đơn giản như trạng thái
+                    })
+                    .then(data => {
+                        console.log('Server response:', data);
+                        alert('File uploaded and queued for processing.');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to upload and process file.');
+                    });
                 });
 
                 fileCard.appendChild(thumbnail);
@@ -242,27 +266,6 @@
 
         function downloadAll() {
             alert('Downloading all files...');
-            const formData = new FormData();
-
-            uploadedFiles.forEach(file => {
-                formData.append('file', file);
-            });
-
-            // Gửi AJAX request đến servlet
-            fetch('/convert', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = 'converted-file.docx'; // Tên file tải xuống
-                link.click();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
         }
     </script>
 </body>

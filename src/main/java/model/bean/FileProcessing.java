@@ -1,7 +1,7 @@
 package model.bean;
 
 public class FileProcessing {
-	private Integer id;
+	private int id;
 	
 	private String inputFile;
 	
@@ -9,11 +9,11 @@ public class FileProcessing {
 	
 	private String status;
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

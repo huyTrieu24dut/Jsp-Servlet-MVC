@@ -1,16 +1,16 @@
 package model.bean;
 
 public class User {
-	private Integer id;
+	private int id;
 	
 	private String userName;
 	
 	private String password;
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getUserName() {
