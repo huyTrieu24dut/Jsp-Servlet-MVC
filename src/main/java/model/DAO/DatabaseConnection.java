@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/DULIEU";
+    private static final String URL = "jdbc:mysql://localhost:3306/MVCDB";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
@@ -15,7 +15,7 @@ public class DatabaseConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Failed to load JDBC driver", e);
+            throw new RuntimeException("Ket noi JBDC khong thanh cong", e);
         }
     }
 

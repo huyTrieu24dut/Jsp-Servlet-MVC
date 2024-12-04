@@ -14,9 +14,9 @@ import javax.servlet.http.Part;
  * Servlet implementation class FileController
  */
 @WebServlet("/FileController")
-public class FileController extends HttpServlet {
+public class UploadAndConvertFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public FileController() {
+    public UploadAndConvertFileServlet() {
         super();
     }
 
@@ -27,18 +27,6 @@ public class FileController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("file");
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-//        String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-
-//        File uploadDir = new File(uploadPath);
-//        if (!uploadDir.exists()) {
-//            uploadDir.mkdir();
-//        }
-//
-//        File uploadedFile = new File(uploadPath, fileName);
-//        filePart.write(uploadedFile.getAbsolutePath());
-//
-//        // Gửi đến Service để xử lý nền
-//        fileService.processFileAsync(uploadedFile.getAbsolutePath());
 
         response.getWriter().println("File is being processed in the background.");
 	}

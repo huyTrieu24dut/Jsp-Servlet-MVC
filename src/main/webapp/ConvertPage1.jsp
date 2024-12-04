@@ -185,6 +185,8 @@
         const fileList = document.getElementById('file-list');
         const errorMessage = document.getElementById('error-message');
         
+        let uploadedFiles = []; //File list
+        
         fileInput.addEventListener('change', (event) => {
             const files = Array.from(event.target.files);
             
@@ -196,6 +198,8 @@
             errorMessage.textContent = ''; // Clear error message if file count is valid
 
             files.forEach((file) => {
+            	uploadedFiles.push(file); // add File
+            	
                 const fileCard = document.createElement('div');
                 fileCard.className = 'file-card';
 
@@ -238,7 +242,27 @@
 
         function downloadAll() {
             alert('Downloading all files...');
-            // Add logic to download all files
+            const formData = new FormData();
+
+            uploadedFiles.forEach(file => {
+                formData.append('file', file);
+            });
+
+            // Gửi AJAX request đến servlet
+            fetch('/convert', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'converted-file.docx'; // Tên file tải xuống
+                link.click();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     </script>
 </body>

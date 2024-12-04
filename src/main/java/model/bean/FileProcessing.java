@@ -7,8 +7,6 @@ public class FileProcessing {
 	
 	private String outputFile;
 	
-	private User user;
-	
 	private String status;
 
 	public Integer getId() {
@@ -33,14 +31,6 @@ public class FileProcessing {
 
 	public void setOutputFile(String outputFile) {
 		this.outputFile = outputFile;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public String getStatus() {

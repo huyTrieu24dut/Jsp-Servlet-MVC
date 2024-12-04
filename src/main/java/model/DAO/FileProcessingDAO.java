@@ -2,16 +2,37 @@ package model.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import model.bean.FileProcessing;
 
 public class FileProcessingDAO {
 	
-	public void addFileProcessing(int userId, String filename, String filePath) {
-	    String query = "INSERT INTO file_processing (user_id, filename, file_path, status) VALUES (?, ?, ?, 'PENDING')";
+	public FileProcessing getFileById(int fileId) {
+		String query = "SELECT file_path, output_path, status FROM file_processing WHERE id = ?";
+		try (Connection conn = DatabaseConnection.getInstance().getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+			stmt.setInt(1, fileId);
+			try (ResultSet rs = stmt.executeQuery(query)) {
+				FileProcessing fileProcessing = new FileProcessing();
+				fileProcessing.setId(fileId);
+				fileProcessing.setInputFile(rs.getString("file_path"));
+				fileProcessing.setOutputFile(rs.getString("output_file"));
+				fileProcessing.setStatus(rs.getString("status"));
+				return fileProcessing;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void addFileProcessing(int userId, String filePath) {
+	    String query = "INSERT INTO file_processing (user_id, file_path) VALUES (?, ?)";
 	    try (Connection conn = DatabaseConnection.getInstance().getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(query)) {
 	        stmt.setInt(1, userId);
-	        stmt.setString(2, filename);
-	        stmt.setString(3, filePath);
+	        stmt.setString(2, filePath);
 	        stmt.executeUpdate();
 	    } catch (Exception e) {
 	        e.printStackTrace();

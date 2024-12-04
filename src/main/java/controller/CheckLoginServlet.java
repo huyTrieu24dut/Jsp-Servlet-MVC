@@ -19,7 +19,6 @@ public class CheckLoginServlet extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
@@ -27,10 +26,12 @@ public class CheckLoginServlet extends HttpServlet {
 		String destination = null;
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		System.out.println(username);
+		System.out.println(password);
 		CheckLoginBO checkLoginBO = new CheckLoginBO();
 		try {
 			if (checkLoginBO.isValidUser(username, password)) {
-				destination = "";
+				destination = "/ConvertPage1.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			} else {
