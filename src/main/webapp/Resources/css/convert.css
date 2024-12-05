@@ -1,0 +1,170 @@
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        nav a {
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background-color: #fffdfd;
+            border-radius: 3px;
+            transition: 0.5s;
+        }
+
+        /* General Navbar Styling */
+        .navbar {
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between links and button */
+            align-items: center; /* Align items vertically */
+            padding: 10px 20px;
+            background-color: #29292c; /* Light background for navbar */
+            border-bottom: 1px solid #ccc;
+        }
+        
+        /* Styling for Navigation Links */
+        .nav-links {
+            display: flex; /* Keep the links in a row */
+            gap: 15px; /* Add spacing between links */
+        }
+        
+        /* Styling for Links */
+        .nav-links a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Styling for Logout Button */
+        .logout-btn {
+            padding: 10px 15px;
+            background-color: #FF4C4C;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            background-color: #FF6A6A;
+        }
+
+        /* Page Content */
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .button-group {
+            margin: 20px 0;
+        }
+
+        .file-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px auto;
+        }
+
+        .file-card {
+            width: 150px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .file-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        .file-card .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #FF4C4C;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .file-card .file-name {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .download-all-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-card {
+            width: 100%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 1s;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Hide Pages */
+        .hidden {
+            display: none;
+        }
+
+        .text-info{
+            margin: 1rem;
+        }
