@@ -5,165 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF to Word Converter</title>
+    
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/Resources/css/convert.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
 
-        /* Navigation Menu */
-        nav {
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            padding: 10px 20px;
-            margin: 0 10px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            background-color: #575757;
-        }
-
-        /* Logout Button (Top Left) */
-        .logout-btn {
-            margin: 1rem;
-            background-color: #FF4C4C;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .logout-btn:hover {
-            background-color: #e03e3e;
-        }
-
-        /* Page Content */
-        .container {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .button-group {
-            margin: 20px 0;
-        }
-
-        .file-list {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px auto;
-        }
-
-        .file-card {
-            width: 150px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .file-card img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            background-color: #ddd;
-        }
-
-        .file-card .remove-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #FF4C4C;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .file-card .file-name {
-            font-size: 14px;
-            margin: 10px 0;
-        }
-
-        .download-all-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            color: #fff;
-            background-color: #333;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .progress-container {
-            margin-top: 20px;
-        }
-
-        .progress-card {
-            width: 100%;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress-bar span {
-            display: block;
-            height: 100%;
-            background-color: #4CAF50;
-            transition: width 1s;
-        }
-
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
-
-        /* Hide Pages */
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <!-- Logout Button -->
-    <nav>
-        <a href="javascript:void(0);" onclick="showPage('convert')">Convert</a>
-        <a href="javascript:void(0);" onclick="showPage('progress')">Progress</a>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="./ConvertPage1.jsp">Convert</a>
+            <a href="./progress.jsp">Progress</a>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </nav>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-    <h1>PDF to Word Converter</h1>
-    <p>Select up to 5 PDF files to convert them into Word files:</p>
+    <div class="text-info">
+        <h1>PDF to Word Converter</h1>
+        <p>Select up to 5 PDF files to convert them into Word files:</p>
+    </div>
     <div class="container">
         <div class="button-group">
             <input type="file" id="file-input" multiple hidden>
