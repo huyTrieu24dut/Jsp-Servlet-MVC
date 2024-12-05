@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+nav a {
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: #fffdfd;
+    border-radius: 3px;
+    transition: 0.5s;
+}
+
+/* General Navbar Styling */
+.navbar {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between links and button */
+    align-items: center; /* Align items vertically */
+    padding: 10px 20px;
+    background-color: #29292c; /* Light background for navbar */
+    border-bottom: 1px solid #ccc;
+}
+
+/* Styling for Navigation Links */
+.nav-links {
+    display: flex; /* Keep the links in a row */
+    gap: 15px; /* Add spacing between links */
+}
+
+/* Styling for Links */
+.nav-links a {
+    text-decoration: none;
+    color: #007BFF;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Styling for Logout Button */
+.logout-btn {
+    padding: 10px 15px;
+    background-color: #FF4C4C;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #FF6A6A;
+}
+
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #b2b2c2;
+}
+
+/* Status colors */
+.status-pending {
+    color: orange;
+}
+
+.status-processing {
+    color: blue;
+}
+
+.status-done {
+    color: green;
+}
+
+.status-failed {
+    color: red;
+}
+
+/* Button styling */
+.download-btn {
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.download-btn[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
