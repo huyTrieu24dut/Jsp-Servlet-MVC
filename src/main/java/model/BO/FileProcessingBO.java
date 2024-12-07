@@ -14,10 +14,12 @@ public class FileProcessingBO {
 	public void processFileAsync(int id, String filePath) {
 		executorService.submit(() -> {
 			try {
+				fileProcessingDAO.updateFileProcessingStatus(id, "PROCESSING", null);
 				String outputPath = filePath.replace(".pdf", ".doc").replace("inputfiles", "outputfiles");
 	            convertPdfToDoc(filePath, outputPath);
 				
 				convertPdfToDoc(filePath, outputPath);
+				Thread.sleep(10000);
 				fileProcessingDAO.updateFileProcessingStatus(id, "DONE", outputPath);
 			} catch (Exception e) {
 				fileProcessingDAO.updateFileProcessingStatus(id, "FAILED", null);
@@ -43,7 +45,7 @@ public class FileProcessingBO {
 		return foundFiles;
 	}
 	
-	public int addFileProcessing(int userId, String file_path) {
-		return fileProcessingDAO.addFileProcessing(userId, file_path);
+	public int addFileProcessing(int userId, String fileName, String file_path) {
+		return fileProcessingDAO.addFileProcessing(userId, fileName, file_path);
 	}
 }

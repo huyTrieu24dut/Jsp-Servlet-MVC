@@ -15,10 +15,13 @@
 <body>
     <nav class="navbar">
         <div class="nav-links">
-            <a href="./ConvertPage1.jsp">Convert</a>
-            <a href="./progress.jsp">Progress</a>
+            <a href="<%= request.getContextPath() %>/ConvertPage1.jsp">Convert</a>
+            <a href="<%= request.getContextPath() %>/FileProcessingListServlet">Progress</a>
         </div>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+	    <form action="LogoutServlet" method="POST">
+	    	<button class="logout-btn" type="submit">Logout</button>
+		</form>
+
     </nav>
     <div class="text-info">
         <h1>PDF to Word Converter</h1>
@@ -97,10 +100,11 @@
                         if (!response.ok) {
                             throw new Error('Failed to process file on server');
                         }
-                        return response.text(); // Server có thể trả về phản hồi đơn giản như trạng thái
+                        return response.text();
                     })
                     .then(data => {
                         console.log('Server response:', data);
+                        fileCard.remove();
                         alert('File uploaded and queued for processing.');
                     })
                     .catch(error => {

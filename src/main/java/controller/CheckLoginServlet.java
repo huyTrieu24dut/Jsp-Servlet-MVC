@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.BO.CheckLoginBO;
 
@@ -29,8 +30,12 @@ public class CheckLoginServlet extends HttpServlet {
 		System.out.println(username);
 		System.out.println(password);
 		CheckLoginBO checkLoginBO = new CheckLoginBO();
+		
+		int userId = checkLoginBO.isValidUser(username, password);
 		try {
-			if (checkLoginBO.isValidUser(username, password)) {
+			if (userId != -1) {
+				HttpSession session = request.getSession();
+				session.setAttribute("userId", userId);
 				destination = "/ConvertPage1.jsp";
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
@@ -43,5 +48,4 @@ public class CheckLoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -5,32 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class UserDAO {
-	public boolean isValidUser(String username, String password) {
-		System.out.println(username);
-		System.out.println(password);
-	    boolean ktra = false;
-	    String query = "SELECT password FROM users WHERE username = ?";
-	    try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
+	public int isValidUser(String username, String password) {
+	    System.out.println("Username: " + username);
+	    System.out.println("Password: " + password);
 
-	        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-	             PreparedStatement stmt = conn.prepareStatement(query)) {
-	            
-	            stmt.setString(1, username);
-	            
-	            try (ResultSet rs = stmt.executeQuery()) {
-	                while (rs.next()) {
-	                    if (password.equals(rs.getString("password"))) {
-	                        ktra = true;
-	                        break;
-	                    }
+	    int userId = -1;
+	    String query = "SELECT id, password FROM users WHERE username = ?";
+	    try (Connection conn = DatabaseConnection.getInstance().getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setString(1, username);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                String dbPassword = rs.getString("password");
+	                if (password.equals(dbPassword)) {
+	                    userId = rs.getInt("id");
+	                    break;
 	                }
 	            }
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    return ktra;
+	    return userId;
 	}
 
 }
