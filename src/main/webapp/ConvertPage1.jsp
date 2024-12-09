@@ -40,7 +40,7 @@
         
         <div class="error-message" id="error-message"></div>
 
-        <button class="download-all-btn" onclick="downloadAll()">⬇️ Download All</button>
+        <!-- <button class="download-all-btn" onclick="downloadAll()">⬇️ Download All</button> -->
     </div>
 
     <script>

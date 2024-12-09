@@ -1,8 +1,17 @@
 package model.BO;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import model.DAO.FileProcessingDAO;
 import model.bean.FileProcessing;
@@ -47,5 +56,48 @@ public class FileProcessingBO {
 	
 	public int addFileProcessing(int userId, String fileName, String file_path) {
 		return fileProcessingDAO.addFileProcessing(userId, fileName, file_path);
+	}
+	
+	public File uploadFile(Part filePart, String uploadDir) throws IOException {
+        File uploadDirFile = new File(uploadDir);
+        System.out.println(uploadDir);
+        if (!uploadDirFile.exists()) {
+            uploadDirFile.mkdirs();
+            System.out.println("Đã tạo thư mục ở đường dẫn" + uploadDir);
+        }
+        
+        String fileName = filePart.getSubmittedFileName();
+        
+        //Tải file về
+        File uploadedFile = new File(uploadDir, fileName);
+        try (InputStream input = filePart.getInputStream();
+             FileOutputStream output = new FileOutputStream(uploadedFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+        }
+        return uploadedFile;
+	}
+
+	public boolean downloadFile(String filePath, HttpServletResponse response) throws IOException {
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+
+            try (FileInputStream fis = new FileInputStream(file);
+                 OutputStream os = response.getOutputStream()) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+            }
+            return true;
+        }
+		return false;
 	}
 }

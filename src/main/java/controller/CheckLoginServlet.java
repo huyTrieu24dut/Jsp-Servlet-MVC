@@ -27,8 +27,6 @@ public class CheckLoginServlet extends HttpServlet {
 		String destination = null;
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.out.println(username);
-		System.out.println(password);
 		CheckLoginBO checkLoginBO = new CheckLoginBO();
 		
 		int userId = checkLoginBO.isValidUser(username, password);

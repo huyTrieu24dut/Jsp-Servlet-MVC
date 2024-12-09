@@ -1,9 +1,7 @@
 package controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,9 +14,6 @@ import javax.servlet.http.Part;
 
 import model.BO.FileProcessingBO;
 
-/**
- * Servlet implementation class FileController
- */
 @WebServlet("/UploadAndConvertFileServlet")
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -38,31 +33,15 @@ public class UploadAndConvertFileServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("file");
         String fileName = filePart.getSubmittedFileName();
-        
         HttpSession session = request.getSession(false);
         Integer userId = (Integer)session.getAttribute("userId");
 
         String uploadDir = getServletContext().getRealPath("/inputfiles");
-        File uploadDirFile = new File(uploadDir);
-        System.out.println(uploadDir + " :::: " + uploadDirFile.toString());
-        if (!uploadDirFile.exists()) {
-            uploadDirFile.mkdirs();
-            System.out.println("Đã tạo thư mục ở đường dẫn" + uploadDir);
-        }
-        
-        //Tải file về
-        File uploadedFile = new File(uploadDir, fileName);
-        try (InputStream input = filePart.getInputStream();
-             FileOutputStream output = new FileOutputStream(uploadedFile)) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = input.read(buffer)) != -1) {
-                output.write(buffer, 0, bytesRead);
-            }
-        }
-        
-        //Thêm file vào db
+      
         FileProcessingBO fileProcessingBO = new FileProcessingBO();
+        //up file len server
+        File uploadedFile = fileProcessingBO.uploadFile(filePart, uploadDir);
+        //Thêm thông tin vào db
         int fileProcessId = fileProcessingBO.addFileProcessing(userId, fileName, uploadDir);
 
         if (fileProcessId == -1) {

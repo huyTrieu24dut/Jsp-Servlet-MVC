@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 
 public class UserDAO {
 	public int isValidUser(String username, String password) {
-	    System.out.println("Username: " + username);
-	    System.out.println("Password: " + password);
-
 	    int userId = -1;
 	    String query = "SELECT id, password FROM users WHERE username = ?";
 	    try (Connection conn = DatabaseConnection.getInstance().getConnection();

@@ -1,11 +1,6 @@
 package controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,32 +18,23 @@ public class FileDownLoadServlet extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int fileProcessId = Integer.parseInt(request.getParameter("fileId"));
-		System.out.println("fileId = " + fileProcessId);
-        
-		String filePath = fileProcessingBO.getFileById(fileProcessId).getOutputFile();
+        System.out.println("fileId = " + fileProcessId);
 
-        File file = new File(filePath);
+        String filePath = fileProcessingBO.getFileById(fileProcessId).getOutputFile();
         System.out.println(filePath);
-        if (file.exists()) {
-        	System.out.println("tìm thấy file");
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
 
-            try (FileInputStream fis = new FileInputStream(file);
-                 OutputStream os = response.getOutputStream()) {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = fis.read(buffer)) != -1) {
-                    os.write(buffer, 0, bytesRead);
-                }
-            }
-        } else {
-        	
+        boolean fileDownloaded = fileProcessingBO.downloadFile(filePath, response);
+
+        if (!fileDownloaded) {
+            System.out.println("File không tồn tại");
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } else {
+            System.out.println("File đã được tải thành công");
         }
     }
+
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
