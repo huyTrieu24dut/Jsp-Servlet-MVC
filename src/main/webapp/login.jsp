@@ -19,7 +19,7 @@
 <body>
     <div class="overlay">
         <!-- LOGIN FORM -->
-        <form action="<%= request.getContextPath() %>/CheckLoginServlet" method="post">
+        <form action="CheckLoginServlet" method="post">
             <!--   con = Container  for items in the form-->
             <div class="con">
                 <!-- Start header Content -->
@@ -65,10 +65,12 @@
                     </span>
 
                     <br />
-                    <% String errorMessage = (String) request.getAttribute("errorMessage"); if
-                    (errorMessage != null) { %>
+                    <% String errorMessage = (String) request.getAttribute("errorMessage"); 
+            		if (errorMessage != null) { %>
                     <div style="color: red; font-weight: bold"><%= errorMessage %></div>
-                    <% } %>
+                    <%
+                    } 
+                    %>
                     <!-- Log In button -->
                     <button type="submit" class="log-in">Log In</button>
                 </div>

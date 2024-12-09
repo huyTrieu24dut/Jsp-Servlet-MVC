@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter({ "/CheckLoginServlet", "/FileDownLoadServlet", "/FileProcessingListServlet", 
+@WebFilter({ "/FileDownLoadServlet", "/FileProcessingListServlet", 
              "/LogoutServlet", "/UploadAndConvertFileServlet" })
 public class AuthFilter implements Filter {
 

@@ -15,8 +15,8 @@
 <body>
     <nav class="navbar">
         <div class="nav-links">
-            <a href="<%= request.getContextPath() %>/ConvertPage1.jsp">Convert</a>
-            <a href="<%= request.getContextPath() %>/FileProcessingListServlet">Progress</a>
+            <a href="ConvertPage1.jsp">Convert</a>
+            <a href="FileProcessingListServlet">Progress</a>
         </div>
 	    <form action="LogoutServlet" method="POST">
 	    	<button class="logout-btn" type="submit">Logout</button>
@@ -130,6 +130,28 @@
 
         function downloadAll() {
             alert('Downloading all files...');
+            const url = '<%= request.getContextPath() %>/DownloadAllFilesServlet'; // URL mapping của servlet
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to download files');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'all_files.zip';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    alert('Download started.');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to download files.');
+                });
         }
     </script>
 </body>

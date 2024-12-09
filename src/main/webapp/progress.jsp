@@ -13,8 +13,8 @@
 <body>
     <nav class="navbar">
         <div class="nav-links">
-            <a href="<%= request.getContextPath() %>/ConvertPage1.jsp">Convert</a>
-            <a href="<%= request.getContextPath() %>/FileProcessingListServlet">Progress</a>
+            <a href="ConvertPage1.jsp">Convert</a>
+            <a href="FileProcessingListServlet">Progress</a>
         </div>
 		<form action="LogoutServlet" method="POST">
 		    <button class="logout-btn" type="submit">Logout</button>

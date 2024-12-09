@@ -41,6 +41,8 @@ public class CheckLoginServlet extends HttpServlet {
 				rd.forward(request, response);
 			} else {
 				destination = "/login.jsp";
+				String errorMessage = "Đăng nhập không thành công";
+				request.setAttribute("errorMessage", errorMessage);
 				RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 				rd.forward(request, response);
 			}
