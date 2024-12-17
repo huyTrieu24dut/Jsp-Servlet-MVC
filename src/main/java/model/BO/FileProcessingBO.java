@@ -6,12 +6,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import model.DAO.FileProcessingDAO;
 import model.bean.FileProcessing;
@@ -24,7 +30,7 @@ public class FileProcessingBO {
 		executorService.submit(() -> {
 			try {
 				fileProcessingDAO.updateFileProcessingStatus(id, "PROCESSING", null);
-				String outputPath = filePath.replace(".pdf", ".doc").replace("inputfiles", "outputfiles");
+				String outputPath = filePath.replace(".pdf", ".docx").replace("inputfiles", "outputfiles");
 	            convertPdfToDoc(filePath, outputPath);
 				
 				convertPdfToDoc(filePath, outputPath);
@@ -37,11 +43,26 @@ public class FileProcessingBO {
 		});
 	}
 	
+//	public String convertPdfToDoc(String filePath, String outputPath) throws Exception {
+//		com.aspose.pdf.Document pdfDocument = new com.aspose.pdf.Document(filePath);
+//		pdfDocument.save(outputPath, com.aspose.pdf.SaveFormat.Doc);
+//		pdfDocument.close();
+//		return outputPath;
+//	}
+	
 	public String convertPdfToDoc(String filePath, String outputPath) throws Exception {
-		com.aspose.pdf.Document pdfDocument = new com.aspose.pdf.Document(filePath);
-		pdfDocument.save(outputPath, com.aspose.pdf.SaveFormat.Doc);
-		pdfDocument.close();
-		return outputPath;
+	    try (XWPFDocument wordDocument = new XWPFDocument();
+	         PDDocument pdfDocument = PDDocument.load(new File(filePath));
+	         FileOutputStream out = new FileOutputStream(outputPath)) {
+	    	PDFTextStripper pdfStripper = new PDFTextStripper();
+	    	String text = pdfStripper.getText(pdfDocument);
+	    	
+	    	wordDocument.createParagraph().createRun().setText(text);
+
+	        wordDocument.write(out);
+	        System.out.println("Đã chuyển đổi PDF sang Word thành công: " + outputPath);
+	    }
+	    return outputPath;
 	}
 
 	public FileProcessing getFileById(int fileId) {
@@ -86,7 +107,8 @@ public class FileProcessingBO {
 
         if (file.exists()) {
             response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+            String encodedFileName = URLEncoder.encode(file.getName(), StandardCharsets.UTF_8.toString());
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
 
             try (FileInputStream fis = new FileInputStream(file);
                  OutputStream os = response.getOutputStream()) {
