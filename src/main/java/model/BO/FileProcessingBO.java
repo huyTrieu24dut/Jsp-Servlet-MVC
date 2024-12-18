@@ -30,7 +30,7 @@ public class FileProcessingBO {
 		executorService.submit(() -> {
 			try {
 				fileProcessingDAO.updateFileProcessingStatus(id, "PROCESSING", null);
-				String outputPath = filePath.replace(".pdf", ".docx").replace("inputfiles", "outputfiles");
+				String outputPath = filePath.replace(".pdf", ".doc").replace("inputfiles", "outputfiles");
 	            convertPdfToDoc(filePath, outputPath);
 				
 				convertPdfToDoc(filePath, outputPath);
@@ -43,27 +43,27 @@ public class FileProcessingBO {
 		});
 	}
 	
-//	public String convertPdfToDoc(String filePath, String outputPath) throws Exception {
-//		com.aspose.pdf.Document pdfDocument = new com.aspose.pdf.Document(filePath);
-//		pdfDocument.save(outputPath, com.aspose.pdf.SaveFormat.Doc);
-//		pdfDocument.close();
-//		return outputPath;
-//	}
-	
 	public String convertPdfToDoc(String filePath, String outputPath) throws Exception {
-	    try (XWPFDocument wordDocument = new XWPFDocument();
-	         PDDocument pdfDocument = PDDocument.load(new File(filePath));
-	         FileOutputStream out = new FileOutputStream(outputPath)) {
-	    	PDFTextStripper pdfStripper = new PDFTextStripper();
-	    	String text = pdfStripper.getText(pdfDocument);
-	    	
-	    	wordDocument.createParagraph().createRun().setText(text);
-
-	        wordDocument.write(out);
-	        System.out.println("Đã chuyển đổi PDF sang Word thành công: " + outputPath);
-	    }
-	    return outputPath;
+		com.aspose.pdf.Document pdfDocument = new com.aspose.pdf.Document(filePath);
+		pdfDocument.save(outputPath, com.aspose.pdf.SaveFormat.Doc);
+		pdfDocument.close();
+		return outputPath;
 	}
+	
+//	public String convertPdfToDoc(String filePath, String outputPath) throws Exception {
+//	    try (XWPFDocument wordDocument = new XWPFDocument();
+//	         PDDocument pdfDocument = PDDocument.load(new File(filePath));
+//	         FileOutputStream out = new FileOutputStream(outputPath)) {
+//	    	PDFTextStripper pdfStripper = new PDFTextStripper();
+//	    	String text = pdfStripper.getText(pdfDocument);
+//	    	
+//	    	wordDocument.createParagraph().createRun().setText(text);
+//
+//	        wordDocument.write(out);
+//	        System.out.println("Đã chuyển đổi PDF sang Word thành công: " + outputPath);
+//	    }
+//	    return outputPath;
+//	}
 
 	public FileProcessing getFileById(int fileId) {
 		FileProcessing foundFile = fileProcessingDAO.getFileById(fileId);
